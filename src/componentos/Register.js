@@ -1,78 +1,82 @@
+// src/components/RegisterForm.js
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../Styled/auth.scss';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import '../Styled/auth.scss'; // Import the CSS file
 
-function Register() {
-  const [name, setName] = useState(''); // State for user's name
-  const [email, setEmail] = useState(''); // State for user's email
-  const [password, setPassword] = useState(''); // State for user's password
-  const [error, setError] = useState(''); // State for handling error messages
-  const navigate = useNavigate(); // Hook for programmatic navigation
+const RegisterForm = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault();
 
     try {
-      // Send registration data to the server
-      const response = await fetch('/api/register', { // Replace with  API 
-        method: 'POST', // HTTP method
-        headers: {
-          'Content-Type': 'application/json', // Sending JSON data
-        },
-        body: JSON.stringify({ name, email, password }), // Convert data to JSON
+      await axios.post('http://localhost:3001/api/auth/register', {
+        username,
+        email,
+        password,
+        role
       });
 
-      if (!response.ok) { // Check if response status is not OK
-        throw new Error('Failed to register'); // Throw an error if registration fails
-      }
-
-      // Redirect to profile page after successful registration
-      navigate('/profile');
+      setSuccess('Registration successful');
+      setError('');
+      navigate('/Perfil');
     } catch (err) {
-      // Handle errors and display error message to the user
-      setError(err.message);
+      setError(err.response?.data?.message || 'Registration failed');
+      setSuccess('');
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-box">
-        <h1>Create an Account</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name</label>
-            <input 
-              type="text" 
-              value={name} 
-              onChange={(e) => setName(e.target.value)} 
-              required // Ensure the field is not empty
-            />
-          </div>
-          <div>
-            <label>Email</label>
-            <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required // Ensure the field is not empty
-            />
-          </div>
-          <div>
-            <label>Password</label>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required // Ensure the field is not empty
-            />
-          </div>
-          {error && <p className="error-message">{error}</p>} {/* Display error message if any */}
-          <button type="submit">Register</button>
-        </form>
-        <p>Already have an account? <Link to="/login">Log in</Link></p> {/* Link to login page */}
-      </div>
+    <div className="register-form">
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Role:</label>
+          <select value={role} onChange={(e) => setRole(e.target.value)}>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <button type="submit">Register</button>
+        {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
+      </form>
     </div>
   );
-}
+};
 
-export default Register;
+export default RegisterForm;
