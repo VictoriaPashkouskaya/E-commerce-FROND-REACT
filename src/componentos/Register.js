@@ -1,8 +1,8 @@
 // src/components/RegisterForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import '../Styled/auth.scss'; // Import the CSS file
+import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
+import '../Styled/auth.scss'; 
 
 const RegisterForm = () => {
   const [username, setUsername] = useState('');
@@ -17,16 +17,23 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:3001/api/auth/register', {
+      // Send a POST request to register the user
+      const response = await axios.post('http://localhost:3001/api/auth/register', {
         username,
         email,
         password,
         role
       });
 
-      setSuccess('Registration successful');
-      setError('');
-      navigate('/Perfil');
+      if (response.status === 201) {
+        setSuccess('Registration successful');
+        setError('');
+        
+        // Optionally handle token storage or other actions here
+        
+        // Redirect to the login page after successful registration
+        navigate('/my-app/src/componentos/Perfil.js');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
       setSuccess('');
@@ -74,6 +81,7 @@ const RegisterForm = () => {
         <button type="submit">Register</button>
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
+        <p>Already have an account? <Link to="/login">Log in here</Link></p> {/* Link to login page */}
       </form>
     </div>
   );

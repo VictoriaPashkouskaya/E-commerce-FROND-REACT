@@ -1,65 +1,51 @@
-// src/Styled/profile.scss
+.profile-page {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-.profile {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-  }
-  
-  .profile h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333333;
-    text-align: center;
-  }
-  
-  .profile div {
-    margin-bottom: 15px;
-  }
-  
-  .profile div strong {
-    display: block;
-    font-size: 1.1rem;
-    color: #555555;
-  }
-  
-  .profile div p {
-    font-size: 1rem;
-    color: #777777;
-    margin: 5px 0;
-  }
-  
-  .profile .error {
-    color: red;
-    font-size: 1rem;
-    text-align: center;
-  }
-  
-  .profile .success {
-    color: green;
-    font-size: 1rem;
-    text-align: center;
-  }
-  
-  @media (max-width: 600px) {
-    .profile {
-      padding: 15px;
-    }
-  
-    .profile h2 {
-      font-size: 1.5rem;
-    }
-  
-    .profile div strong {
-      font-size: 1rem;
-    }
-  
-    .profile div p {
-      font-size: 0.9rem;
-    }
-  }
-  
+.profile-image img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-image input {
+  display: block;
+  margin-top: 10px;
+}
+
+.user-info p {
+  margin: 5px 0;
+}
+
+.user-cart {
+  margin-top: 20px;
+}
+
+.logout-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #e60000;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}

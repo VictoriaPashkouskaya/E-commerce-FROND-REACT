@@ -16,8 +16,8 @@ function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-box">
+    <div className="register-form">
+      <div className="register-form">
         <h1>Log In</h1>
         <form onSubmit={handleSubmit}>
           <div>

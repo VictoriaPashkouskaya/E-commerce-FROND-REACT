@@ -15,19 +15,19 @@ function Home() {
         <h2>Shop by Category</h2>
         <div className="categories">
           <div className="category-card">
-            <img src="electronics.jpg" alt="Electronics" />
+            <img  src={require('../images/images.jpg')}alt="Electronics" />
             <h3>Electronics</h3>
           </div>
           <div className="category-card">
-            <img src="fashion.jpg" alt="Fashion" />
+            <img src={require('../images/images (1).jpg')} alt="Fashion" />
             <h3>Fashion</h3>
           </div>
           <div className="category-card">
-            <img src="home.jpg" alt="Home Appliances" />
+            <img src={require('../images/cones-plant-home-decors-white-background-set-metal-color-home-decor-psd-format-3d_584012-364.jpg')} alt="Home Appliances" />
             <h3>Home Appliances</h3>
           </div>
           <div className="category-card">
-            <img src="books.jpg" alt="Books" />
+          <img src={require('../images/books-stack-books-isolated-white-background-three-books-knowledge-day-paper-product_653217-44.avif')} alt="Books" />
             <h3>Books</h3>
           </div>
         </div>
