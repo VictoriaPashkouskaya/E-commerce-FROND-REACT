@@ -9,9 +9,9 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Логика аутентификации
+    // logica aut
     console.log('Login:', email, password);
-    // После успешного входа перенаправляем пользователя на страницу профиля
+    // ruta for profile
     navigate('/profile');
   };
 

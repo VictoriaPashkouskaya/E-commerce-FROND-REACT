@@ -1,12 +1,11 @@
-// src/components/Products.js
+// src/componentos/Products.js
 import React, { useEffect, useState } from 'react';
-import '../Styled/Product.scss'; 
+import '../Styled/Product.scss';
 
-const Products = () => {
+const Products = ({ addToCart }) => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
-  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -16,38 +15,28 @@ const Products = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched products:', data.products); // <-- Логируем массив продуктов
-        setProducts(data.products); // <--  data.products
+        setProducts(data.products || []); // Убедитесь, что это массив
       } catch (error) {
-        console.error('Error fetching products:', error);
         setError('Failed to fetch products: ' + error.message);
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchProducts();
   }, []);
-  
 
-  const addToCart = (product) => {
-    // Prevent adding the same product multiple times
-    if (cart.some(cartItem => cartItem.id === product.id)) {
-      alert(`${product.name} is already in the cart!`);
-    } else {
-      // Add product to the cart
-      setCart([...cart, product]);
-      alert(`${product.name} added to cart!`);
+  const handleAddToCart = (product) => {
+    if (addToCart) {
+      addToCart(product);
     }
   };
 
   if (loading) {
-    // Show a loading message while fetching data
     return <div>Loading...</div>;
   }
 
   if (error) {
-    // Display error message if there's an issue with fetching data
     return <div>Error: {error}</div>;
   }
 
@@ -58,15 +47,22 @@ const Products = () => {
         {products.length > 0 ? (
           products.map(product => (
             <div key={product.id || product.name} className="product-card">
-              
+              {product.image_url ? (
+                <img
+                  src={`http://localhost:3001${product.image_url}`}
+                  alt={product.name}
+                  className="product-image"
+                />
+              ) : (
+                <div className="no-image">No Image Available</div>
+              )}
               <h2 className="product-name">{product.name}</h2>
               <p className="product-description">{product.description || 'No description available'}</p>
               <p className="product-price">${Number(product.price).toFixed(2)}</p>
-              <button onClick={() => addToCart(product)} className="add-to-cart-button">Add to Cart</button>
+              <button onClick={() => handleAddToCart(product)} className="add-to-cart-button">Add to Cart</button>
             </div>
           ))
         ) : (
-          // Show a message if no products are available
           <p>No products available</p>
         )}
       </div>
@@ -75,3 +71,5 @@ const Products = () => {
 };
 
 export default Products;
+
+

@@ -1,11 +1,11 @@
+// src/componentos/Cart.js
 import React from 'react';
 import '../Styled/Cart.scss';
 
 const Cart = ({ cart = [], removeFromCart }) => {
-  console.log('Cart:', cart); // Debugging line
-
   const calculateTotal = () => {
-    return cart.reduce((total, item) => total + (item.price || 0), 0).toFixed(2);
+    const total = cart.reduce((total, item) => total + (Number(item.price) || 0), 0);
+    return total.toFixed(2);
   };
 
   return (
@@ -16,7 +16,7 @@ const Cart = ({ cart = [], removeFromCart }) => {
           <ul className="cart-items">
             {cart.map((item) => (
               <li key={item.id} className="cart-item">
-                <img src={`http://localhost:3001/images/${item.id}.jpg`} alt={item.name} className="cart-item-image" />
+                <img src={`http://localhost:3001${item.image_url}`} alt={item.name} className="cart-item-image" />
                 <div className="cart-item-info">
                   <h2>{item.name}</h2>
                   <p>${Number(item.price).toFixed(2)}</p>
@@ -40,3 +40,4 @@ const Cart = ({ cart = [], removeFromCart }) => {
 };
 
 export default Cart;
+
